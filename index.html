@@ -37,6 +37,142 @@
             user-select: none;
         }
 
+        /* Installer */
+        #installer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0078D7, #106EBE);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .installer-content {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .installer-logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .installer-progress {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .installer-progress-bar {
+            height: 100%;
+            background: #FFFFFF;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .installer-status {
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        /* Setup Screens */
+        .setup-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-color);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            padding: 40px;
+        }
+
+        .setup-content {
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .setup-title {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .setup-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+        }
+
+        .setup-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .setup-option {
+            padding: 24px;
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .setup-option:hover {
+            background: var(--surface-light);
+        }
+
+        .setup-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(0, 120, 215, 0.1);
+        }
+
+        .setup-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            background: var(--surface-color);
+            color: var(--text-color);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
         /* Taskbar */
         #taskbar {
             position: fixed;
@@ -79,15 +215,18 @@
             align-items: center;
             flex: 1;
             margin: 0 12px;
+            gap: 4px;
         }
 
         .taskbar-app {
             padding: 8px 16px;
-            margin: 0 4px;
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .taskbar-app:hover {
@@ -102,6 +241,17 @@
             display: flex;
             align-items: center;
             gap: 8px;
+        }
+
+        .tray-icon {
+            padding: 8px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tray-icon:hover {
+            background: rgba(255,255,255,0.1);
         }
 
         .time-display {
@@ -252,6 +402,9 @@
         .window-title {
             font-weight: 600;
             font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .window-controls {
@@ -309,6 +462,9 @@
             cursor: pointer;
             transition: var(--transition);
             border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
         .sidebar-item:hover {
@@ -555,63 +711,6 @@
             background: var(--accent-color);
         }
 
-        /* Trash Bin */
-        .trash-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            gap: 20px;
-        }
-
-        .trash-icon {
-            font-size: 64px;
-            color: var(--accent-color);
-        }
-
-        /* File Explorer */
-        .explorer-content {
-            display: flex;
-            height: 100%;
-        }
-
-        .explorer-sidebar {
-            width: 200px;
-            background: var(--surface-light);
-            padding: 20px 0;
-        }
-
-        .explorer-main {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .file-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 120px);
-            gap: 16px;
-        }
-
-        .file-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 12px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .file-item:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .file-icon {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
         /* System Info */
         .system-info-grid {
             display: grid;
@@ -651,11 +750,134 @@
             background: var(--primary-color);
             border-radius: 4px;
         }
+
+        /* App Store */
+        .app-store-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .app-card {
+            background: var(--surface-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .app-card:hover {
+            transform: translateY(-2px);
+            background: var(--surface-color);
+        }
+
+        .app-card i {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        /* Update Center */
+        .update-item {
+            background: var(--surface-light);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+        }
+
+        .update-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .update-actions {
+            display: flex;
+            gap: 8px;
+        }
     </style>
 </head>
 <body>
+    <!-- Installer -->
+    <div id="installer">
+        <div class="installer-content">
+            <div class="installer-logo">
+                <i class="fab fa-microsoft"></i>
+            </div>
+            <h1>PartexDesktopOS</h1>
+            <p>Wird vorbereitet...</p>
+            <div class="installer-progress">
+                <div class="installer-progress-bar" id="installer-progress"></div>
+            </div>
+            <div class="installer-status" id="installer-status">Systemkomponenten werden geladen...</div>
+        </div>
+    </div>
+
+    <!-- Setup Screens -->
+    <div id="setup-language" class="setup-screen">
+        <div class="setup-content">
+            <h1 class="setup-title">Sprache auswählen</h1>
+            <p class="setup-subtitle">Wählen Sie Ihre bevorzugte Sprache</p>
+            <div class="setup-options">
+                <div class="setup-option selected" data-value="de">
+                    <i class="fas fa-language"></i>
+                    <div>Deutsch</div>
+                </div>
+                <div class="setup-option" data-value="en">
+                    <i class="fas fa-language"></i>
+                    <div>English</div>
+                </div>
+            </div>
+            <div class="setup-buttons">
+                <button class="btn" id="back-language" style="visibility: hidden;">Zurück</button>
+                <button class="btn btn-primary" id="next-language">Weiter</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup-region" class="setup-screen">
+        <div class="setup-content">
+            <h1 class="setup-title">Region auswählen</h1>
+            <p class="setup-subtitle">Wählen Sie Ihre Region</p>
+            <div class="setup-options">
+                <div class="setup-option selected" data-value="de">
+                    <i class="fas fa-globe-europe"></i>
+                    <div>Deutschland</div>
+                </div>
+                <div class="setup-option" data-value="at">
+                    <i class="fas fa-globe-europe"></i>
+                    <div>Österreich</div>
+                </div>
+                <div class="setup-option" data-value="ch">
+                    <i class="fas fa-globe-europe"></i>
+                    <div>Schweiz</div>
+                </div>
+            </div>
+            <div class="setup-buttons">
+                <button class="btn" id="back-region">Zurück</button>
+                <button class="btn btn-primary" id="next-region">Weiter</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup-complete" class="setup-screen">
+        <div class="setup-content">
+            <h1 class="setup-title">Einrichtung abgeschlossen</h1>
+            <p class="setup-subtitle">PartexDesktopOS ist bereit</p>
+            <div style="margin: 40px 0;">
+                <i class="fas fa-check-circle" style="font-size: 64px; color: var(--secondary-color);"></i>
+            </div>
+            <div class="setup-buttons">
+                <button class="btn" id="back-complete">Zurück</button>
+                <button class="btn btn-primary" id="next-complete">Starten</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Desktop Icons -->
-    <div id="desktop">
+    <div id="desktop" style="display: none;">
         <div class="desktop-icon" onclick="openApp('file-explorer')">
             <i class="fas fa-folder"></i>
             <span>Dateien</span>
@@ -684,14 +906,22 @@
             <i class="fas fa-gamepad"></i>
             <span>Tic Tac Toe</span>
         </div>
-        <div class="desktop-icon" onclick="openApp('trash')">
-            <i class="fas fa-trash"></i>
-            <span>Papierkorb</span>
+        <div class="desktop-icon" onclick="openApp('app-store')">
+            <i class="fas fa-store"></i>
+            <span>App Store</span>
+        </div>
+        <div class="desktop-icon" onclick="openApp('media-player')">
+            <i class="fas fa-play-circle"></i>
+            <span>Media Player</span>
+        </div>
+        <div class="desktop-icon" onclick="openApp('paint')">
+            <i class="fas fa-paint-brush"></i>
+            <span>Paint</span>
         </div>
     </div>
 
     <!-- Taskbar -->
-    <div id="taskbar">
+    <div id="taskbar" style="display: none;">
         <button class="start-button" onclick="toggleStartMenu()">
             <i class="fab fa-microsoft start-icon"></i>
             <span>Start</span>
@@ -702,6 +932,15 @@
         </div>
         
         <div class="system-tray">
+            <div class="tray-icon" onclick="openApp('settings')">
+                <i class="fas fa-wifi"></i>
+            </div>
+            <div class="tray-icon" onclick="openApp('volume')">
+                <i class="fas fa-volume-up"></i>
+            </div>
+            <div class="tray-icon" onclick="openApp('notifications')">
+                <i class="fas fa-bell"></i>
+            </div>
             <div class="time-display" id="time-display">12:00</div>
         </div>
     </div>
@@ -748,6 +987,21 @@
                     <i class="fas fa-edit" style="margin-right: 12px;"></i>
                     <span>Neues Dokument</span>
                 </div>
+                <div class="recommended-item" onclick="openApp('app-store')">
+                    <i class="fas fa-store" style="margin-right: 12px;"></i>
+                    <span>Apps entdecken</span>
+                </div>
+            </div>
+            <div class="recommended-section">
+                <div class="recommended-title">Zuletzt verwendet</div>
+                <div class="recommended-item" onclick="openApp('partex-browser')">
+                    <i class="fas fa-globe" style="margin-right: 12px;"></i>
+                    <span>PartexBrowser</span>
+                </div>
+                <div class="recommended-item" onclick="openApp('settings')">
+                    <i class="fas fa-cog" style="margin-right: 12px;"></i>
+                    <span>Einstellungen</span>
+                </div>
             </div>
         </div>
     </div>
@@ -759,12 +1013,94 @@
         let openWindows = [];
         let zIndexCounter = 100;
         let startMenuOpen = false;
+        let currentSetupStep = 0;
+        const setupScreens = ['setup-language', 'setup-region', 'setup-complete'];
 
         // Initialize System
         document.addEventListener('DOMContentLoaded', function() {
+            startInstaller();
+        });
+
+        function startInstaller() {
+            const installer = document.getElementById('installer');
+            const progressBar = document.getElementById('installer-progress');
+            const statusText = document.getElementById('installer-status');
+            
+            let progress = 0;
+            const steps = [
+                "Systemkomponenten werden geladen...",
+                "Treiber werden installiert...",
+                "Systemdienste werden gestartet...",
+                "Benutzeroberfläche wird vorbereitet...",
+                "Finalisiere Installation..."
+            ];
+            
+            let currentStep = 0;
+            
+            const interval = setInterval(() => {
+                progress += 2;
+                if (progress > 100) progress = 100;
+                progressBar.style.width = `${progress}%`;
+                
+                if (currentStep < steps.length && progress >= (currentStep + 1) * (100 / steps.length)) {
+                    statusText.textContent = steps[currentStep];
+                    currentStep++;
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        installer.style.display = 'none';
+                        showSetupScreen('setup-language');
+                    }, 1000);
+                }
+            }, 60); // 1 minute total
+        }
+
+        function showSetupScreen(screenId) {
+            document.querySelectorAll('.setup-screen').forEach(screen => {
+                screen.style.display = 'none';
+            });
+            document.getElementById(screenId).style.display = 'flex';
+            currentSetupStep = setupScreens.indexOf(screenId);
+        }
+
+        // Setup Navigation
+        document.getElementById('next-language').addEventListener('click', function() {
+            showSetupScreen('setup-region');
+        });
+        
+        document.getElementById('back-region').addEventListener('click', function() {
+            showSetupScreen('setup-language');
+        });
+        
+        document.getElementById('next-region').addEventListener('click', function() {
+            showSetupScreen('setup-complete');
+        });
+        
+        document.getElementById('back-complete').addEventListener('click', function() {
+            showSetupScreen('setup-region');
+        });
+        
+        document.getElementById('next-complete').addEventListener('click', function() {
+            document.querySelectorAll('.setup-screen').forEach(screen => {
+                screen.style.display = 'none';
+            });
+            document.getElementById('desktop').style.display = 'grid';
+            document.getElementById('taskbar').style.display = 'flex';
+            createAppWindows();
             updateTime();
             setInterval(updateTime, 60000);
-            createAppWindows();
+        });
+
+        // Setup Option Selection
+        document.querySelectorAll('.setup-option').forEach(option => {
+            option.addEventListener('click', function() {
+                this.parentElement.querySelectorAll('.setup-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
         });
 
         function updateTime() {
@@ -817,7 +1153,9 @@
                 'settings': 'Einstellungen',
                 'task-manager': 'Task Manager',
                 'tic-tac-toe': 'Tic Tac Toe',
-                'trash': 'Papierkorb'
+                'app-store': 'App Store',
+                'media-player': 'Media Player',
+                'paint': 'Paint'
             };
             
             // Remove existing if any
@@ -828,9 +1166,27 @@
             }
             
             const taskbarApp = document.createElement('div');
-            taskbarApp.className = 'taskbar-app active';
+            taskbarApp.className = 'taskbar-app';
             taskbarApp.setAttribute('data-app', appId);
-            taskbarApp.textContent = appNames[appId];
+            
+            const appIcons = {
+                'file-explorer': 'fa-folder',
+                'partex-browser': 'fa-globe',
+                'notepad': 'fa-edit',
+                'calculator': 'fa-calculator',
+                'settings': 'fa-cog',
+                'task-manager': 'fa-tasks',
+                'tic-tac-toe': 'fa-gamepad',
+                'app-store': 'fa-store',
+                'media-player': 'fa-play-circle',
+                'paint': 'fa-paint-brush'
+            };
+            
+            taskbarApp.innerHTML = `
+                <i class="fas ${appIcons[appId]}"></i>
+                <span>${appNames[appId]}</span>
+            `;
+            
             taskbarApp.onclick = function() {
                 const window = document.getElementById(`app-${appId}`);
                 if (window.style.display === 'flex') {
@@ -888,26 +1244,14 @@
             createSettings();
             createTaskManager();
             createTicTacToe();
-            createTrash();
+            createAppStore();
+            createMediaPlayer();
+            createPaint();
         }
 
         function createFileExplorer() {
-            const window = document.createElement('div');
-            window.id = 'app-file-explorer';
-            window.className = 'app-window';
-            window.style.width = '800px';
-            window.style.height = '600px';
-            window.style.top = '50px';
-            window.style.left = '100px';
-            window.innerHTML = `
-                <div class="window-header">
-                    <div class="window-title">Dateien</div>
-                    <div class="window-controls">
-                        <button class="window-control"><i class="fas fa-minus"></i></button>
-                        <button class="window-control"><i class="fas fa-square"></i></button>
-                        <button class="window-control window-close"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
+            const window = createWindow('file-explorer', 'Dateien', 800, 600, 50, 100);
+            window.innerHTML += `
                 <div class="explorer-content">
                     <div class="explorer-sidebar">
                         <div class="sidebar-item active">Dieser PC</div>
@@ -939,27 +1283,11 @@
                     </div>
                 </div>
             `;
-            document.body.appendChild(window);
-            initWindowControls(window);
         }
 
         function createPartexBrowser() {
-            const window = document.createElement('div');
-            window.id = 'app-partex-browser';
-            window.className = 'app-window';
-            window.style.width = '1000px';
-            window.style.height = '700px';
-            window.style.top = '30px';
-            window.style.left = '200px';
-            window.innerHTML = `
-                <div class="window-header">
-                    <div class="window-title">PartexBrowser</div>
-                    <div class="window-controls">
-                        <button class="window-control"><i class="fas fa-minus"></i></button>
-                        <button class="window-control"><i class="fas fa-square"></i></button>
-                        <button class="window-control window-close"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
+            const window = createWindow('partex-browser', 'PartexBrowser', 1000, 700, 30, 200);
+            window.innerHTML += `
                 <div class="browser-header">
                     <div class="browser-nav">
                         <button class="window-control"><i class="fas fa-arrow-left"></i></button>
@@ -971,8 +1299,6 @@
                 </div>
                 <iframe class="browser-content" src="https://www.bing.com" frameborder="0"></iframe>
             `;
-            document.body.appendChild(window);
-            initWindowControls(window);
             
             // Make browser URL functional
             const urlInput = window.querySelector('.browser-url');
@@ -990,48 +1316,18 @@
         }
 
         function createNotepad() {
-            const window = document.createElement('div');
-            window.id = 'app-notepad';
-            window.className = 'app-window';
-            window.style.width = '600px';
-            window.style.height = '500px';
-            window.style.top = '70px';
-            window.style.left = '150px';
-            window.innerHTML = `
-                <div class="window-header">
-                    <div class="window-title">Notepad</div>
-                    <div class="window-controls">
-                        <button class="window-control"><i class="fas fa-minus"></i></button>
-                        <button class="window-control"><i class="fas fa-square"></i></button>
-                        <button class="window-control window-close"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
+            const window = createWindow('notepad', 'Notepad', 600, 500, 70, 150);
+            window.innerHTML += `
                 <textarea class="notepad-content" placeholder="Beginnen Sie mit der Eingabe...">Willkommen bei PartexDesktopOS!
                 
 Dies ist ein einfacher Texteditor.
 Sie können hier Notizen erstellen und speichern.</textarea>
             `;
-            document.body.appendChild(window);
-            initWindowControls(window);
         }
 
         function createCalculator() {
-            const window = document.createElement('div');
-            window.id = 'app-calculator';
-            window.className = 'app-window';
-            window.style.width = '320px';
-            window.style.height = '400px';
-            window.style.top = '100px';
-            window.style.left = '300px';
-            window.innerHTML = `
-                <div class="window-header">
-                    <div class="window-title">Rechner</div>
-                    <div class="window-controls">
-                        <button class="window-control"><i class="fas fa-minus"></i></button>
-                        <button class="window-control"><i class="fas fa-square"></i></button>
-                        <button class="window-control window-close"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
+            const window = createWindow('calculator', 'Rechner', 320, 400, 100, 300);
+            window.innerHTML += `
                 <div class="window-content">
                     <div class="calculator">
                         <div class="calculator-display" id="calc-display">0</div>
@@ -1057,37 +1353,42 @@ Sie können hier Notizen erstellen und speichern.</textarea>
                     </div>
                 </div>
             `;
-            document.body.appendChild(window);
-            initWindowControls(window);
             initCalculator();
         }
 
         function createSettings() {
-            const window = document.createElement('div');
-            window.id = 'app-settings';
-            window.className = 'app-window';
-            window.style.width = '900px';
-            window.style.height = '650px';
-            window.style.top = '40px';
-            window.style.left = '100px';
-            window.innerHTML = `
-                <div class="window-header">
-                    <div class="window-title">Einstellungen</div>
-                    <div class="window-controls">
-                        <button class="window-control"><i class="fas fa-minus"></i></button>
-                        <button class="window-control"><i class="fas fa-square"></i></button>
-                        <button class="window-control window-close"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
+            const window = createWindow('settings', 'Einstellungen', 900, 650, 40, 100);
+            window.innerHTML += `
                 <div class="settings-container">
                     <div class="settings-sidebar">
-                        <div class="sidebar-item active" onclick="showSettingsSection('system')">System</div>
-                        <div class="sidebar-item" onclick="showSettingsSection('display')">Anzeige</div>
-                        <div class="sidebar-item" onclick="showSettingsSection('personalization')">Personalisierung</div>
-                        <div class="sidebar-item" onclick="showSettingsSection('apps')">Apps</div>
-                        <div class="sidebar-item" onclick="showSettingsSection('accounts')">Konten</div>
-                        <div class="sidebar-item" onclick="showSettingsSection('privacy')">Datenschutz</div>
-                        <div class="sidebar-item" onclick="showSettingsSection('update')">Update & Sicherheit</div>
+                        <div class="sidebar-item active" onclick="showSettingsSection('system')">
+                            <i class="fas fa-cog"></i>
+                            <span>System</span>
+                        </div>
+                        <div class="sidebar-item" onclick="showSettingsSection('display')">
+                            <i class="fas fa-desktop"></i>
+                            <span>Anzeige</span>
+                        </div>
+                        <div class="sidebar-item" onclick="showSettingsSection('personalization')">
+                            <i class="fas fa-palette"></i>
+                            <span>Personalisierung</span>
+                        </div>
+                        <div class="sidebar-item" onclick="showSettingsSection('apps')">
+                            <i class="fas fa-th-large"></i>
+                            <span>Apps</span>
+                        </div>
+                        <div class="sidebar-item" onclick="showSettingsSection('accounts')">
+                            <i class="fas fa-user"></i>
+                            <span>Konten</span>
+                        </div>
+                        <div class="sidebar-item" onclick="showSettingsSection('privacy')">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Datenschutz</span>
+                        </div>
+                        <div class="sidebar-item" onclick="showSettingsSection('update')">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Update & Sicherheit</span>
+                        </div>
                     </div>
                     <div class="settings-main">
                         <div id="settings-system" class="settings-section active">
@@ -1145,52 +1446,50 @@ Sie können hier Notizen erstellen und speichern.</textarea>
                                 </label>
                             </div>
                         </div>
-                        
-                        <div id="settings-personalization" class="settings-section">
-                            <h3 class="settings-title">Personalisierung</h3>
+
+                        <div id="settings-apps" class="settings-section">
+                            <h3 class="settings-title">Apps & Features</h3>
                             <div class="setting-item">
                                 <div>
-                                    <div class="setting-label">Hintergrund</div>
-                                    <div class="setting-description">Desktop-Hintergrund ändern</div>
+                                    <div class="setting-label">Installierte Apps</div>
+                                    <div class="setting-description">Verwalten Sie Ihre Anwendungen</div>
                                 </div>
-                                <button class="window-control">Ändern</button>
+                                <button class="btn">Verwalten</button>
                             </div>
                             <div class="setting-item">
                                 <div>
-                                    <div class="setting-label">Farbschema</div>
-                                    <div class="setting-description">Systemfarben anpassen</div>
+                                    <div class="setting-label">Standard-Apps</div>
+                                    <div class="setting-description">Standardanwendungen festlegen</div>
                                 </div>
-                                <select style="padding: 8px; background: var(--surface-light); color: var(--text-color); border: 1px solid rgba(255,255,255,0.2);">
-                                    <option>Dunkel</option>
-                                    <option>Hell</option>
-                                    <option>Automatisch</option>
-                                </select>
+                                <button class="btn">Ändern</button>
+                            </div>
+                        </div>
+
+                        <div id="settings-update" class="settings-section">
+                            <h3 class="settings-title">Update & Sicherheit</h3>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Systemupdates</div>
+                                    <div class="setting-description">PartexDesktopOS ist auf dem neuesten Stand</div>
+                                </div>
+                                <button class="btn btn-primary" onclick="checkForUpdates()">Nach Updates suchen</button>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Windows Security</div>
+                                    <div class="setting-description">Viren- und Bedrohungsschutz</div>
+                                </div>
+                                <button class="btn">Öffnen</button>
                             </div>
                         </div>
                     </div>
                 </div>
             `;
-            document.body.appendChild(window);
-            initWindowControls(window);
         }
 
         function createTaskManager() {
-            const window = document.createElement('div');
-            window.id = 'app-task-manager';
-            window.className = 'app-window';
-            window.style.width = '700px';
-            window.style.height = '500px';
-            window.style.top = '80px';
-            window.style.left = '200px';
-            window.innerHTML = `
-                <div class="window-header">
-                    <div class="window-title">Task Manager</div>
-                    <div class="window-controls">
-                        <button class="window-control"><i class="fas fa-minus"></i></button>
-                        <button class="window-control"><i class="fas fa-square"></i></button>
-                        <button class="window-control window-close"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
+            const window = createWindow('task-manager', 'Task Manager', 700, 500, 80, 200);
+            window.innerHTML += `
                 <div class="task-manager-content">
                     <div class="process-list">
                         <div class="process-item">
@@ -1234,33 +1533,17 @@ Sie können hier Notizen erstellen und speichern.</textarea>
                             <div style="font-size: 12px; color: var(--text-secondary);">Prozesse: 5</div>
                             <div style="font-size: 12px; color: var(--text-secondary);">CPU-Auslastung: 12%</div>
                         </div>
-                        <button class="window-control" style="background: var(--accent-color);">
+                        <button class="btn" style="background: var(--accent-color);">
                             <i class="fas fa-ban"></i> Prozess beenden
                         </button>
                     </div>
                 </div>
             `;
-            document.body.appendChild(window);
-            initWindowControls(window);
         }
 
         function createTicTacToe() {
-            const window = document.createElement('div');
-            window.id = 'app-tic-tac-toe';
-            window.className = 'app-window';
-            window.style.width = '400px';
-            window.style.height = '450px';
-            window.style.top = '100px';
-            window.style.left = '250px';
-            window.innerHTML = `
-                <div class="window-header">
-                    <div class="window-title">Tic Tac Toe</div>
-                    <div class="window-controls">
-                        <button class="window-control"><i class="fas fa-minus"></i></button>
-                        <button class="window-control"><i class="fas fa-square"></i></button>
-                        <button class="window-control window-close"><i class="fas fa-times"></i></button>
-                    </div>
-                </div>
+            const window = createWindow('tic-tac-toe', 'Tic Tac Toe', 400, 450, 100, 250);
+            window.innerHTML += `
                 <div class="game-container">
                     <h3 id="game-status">Spieler X ist dran</h3>
                     <div class="game-board" id="game-board">
@@ -1274,47 +1557,115 @@ Sie können hier Notizen erstellen und speichern.</textarea>
                         <div class="game-cell" onclick="makeMove(7)"></div>
                         <div class="game-cell" onclick="makeMove(8)"></div>
                     </div>
-                    <button class="window-control" onclick="resetGame()" style="background: var(--primary-color);">
+                    <button class="btn" onclick="resetGame()" style="background: var(--primary-color);">
                         <i class="fas fa-redo"></i> Neustart
                     </button>
                 </div>
             `;
-            document.body.appendChild(window);
-            initWindowControls(window);
             initTicTacToe();
         }
 
-        function createTrash() {
+        function createAppStore() {
+            const window = createWindow('app-store', 'App Store', 800, 600, 60, 150);
+            window.innerHTML += `
+                <div class="app-store-content">
+                    <div class="app-card" onclick="installApp('Media Player')">
+                        <i class="fas fa-play-circle"></i>
+                        <h4>Media Player</h4>
+                        <p>Video- und Audio-Wiedergabe</p>
+                    </div>
+                    <div class="app-card" onclick="installApp('Paint')">
+                        <i class="fas fa-paint-brush"></i>
+                        <h4>Paint</h4>
+                        <p>Bildbearbeitung</p>
+                    </div>
+                    <div class="app-card" onclick="installApp('Calendar')">
+                        <i class="fas fa-calendar"></i>
+                        <h4>Calendar</h4>
+                        <p>Terminverwaltung</p>
+                    </div>
+                    <div class="app-card" onclick="installApp('Weather')">
+                        <i class="fas fa-cloud-sun"></i>
+                        <h4>Weather</h4>
+                        <p>Wettervorhersage</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createMediaPlayer() {
+            const window = createWindow('media-player', 'Media Player', 600, 400, 80, 200);
+            window.innerHTML += `
+                <div class="game-container">
+                    <i class="fas fa-play-circle" style="font-size: 64px; margin-bottom: 20px;"></i>
+                    <h3>Media Player</h3>
+                    <p>Wiedergabe von Audio- und Video-Dateien</p>
+                    <div class="music-controls" style="margin-top: 30px;">
+                        <button class="btn"><i class="fas fa-backward"></i></button>
+                        <button class="btn" style="background: var(--primary-color); padding: 1rem;"><i class="fas fa-play"></i></button>
+                        <button class="btn"><i class="fas fa-forward"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createPaint() {
+            const window = createWindow('paint', 'Paint', 700, 500, 70, 180);
+            window.innerHTML += `
+                <div class="game-container">
+                    <i class="fas fa-paint-brush" style="font-size: 64px; margin-bottom: 20px;"></i>
+                    <h3>Paint</h3>
+                    <p>Erstellen und bearbeiten Sie Bilder</p>
+                    <div style="width: 400px; height: 300px; background: white; border: 2px solid #ccc; margin-top: 20px;"></div>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="btn"><i class="fas fa-eraser"></i></button>
+                        <button class="btn"><i class="fas fa-fill-drip"></i></button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createWindow(appId, title, width, height, top, left) {
             const window = document.createElement('div');
-            window.id = 'app-trash';
+            window.id = `app-${appId}`;
             window.className = 'app-window';
-            window.style.width = '500px';
-            window.style.height = '400px';
-            window.style.top = '120px';
-            window.style.left = '300px';
+            window.style.width = `${width}px`;
+            window.style.height = `${height}px`;
+            window.style.top = `${top}px`;
+            window.style.left = `${left}px`;
             window.innerHTML = `
                 <div class="window-header">
-                    <div class="window-title">Papierkorb</div>
+                    <div class="window-title">
+                        <i class="fas fa-${getAppIcon(appId)}"></i>
+                        <span>${title}</span>
+                    </div>
                     <div class="window-controls">
                         <button class="window-control"><i class="fas fa-minus"></i></button>
                         <button class="window-control"><i class="fas fa-square"></i></button>
                         <button class="window-control window-close"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
-                <div class="trash-content">
-                    <i class="fas fa-trash trash-icon"></i>
-                    <h3>Papierkorb ist leer</h3>
-                    <p style="color: var(--text-secondary); text-align: center;">
-                        Gelöschte Elemente werden hier angezeigt.<br>
-                        Sie können sie wiederherstellen oder endgültig löschen.
-                    </p>
-                    <button class="window-control" style="background: var(--accent-color);">
-                        <i class="fas fa-broom"></i> Papierkorb leeren
-                    </button>
-                </div>
             `;
             document.body.appendChild(window);
             initWindowControls(window);
+            return window;
+        }
+
+        function getAppIcon(appId) {
+            const icons = {
+                'file-explorer': 'folder',
+                'partex-browser': 'globe',
+                'notepad': 'edit',
+                'calculator': 'calculator',
+                'settings': 'cog',
+                'task-manager': 'tasks',
+                'tic-tac-toe': 'gamepad',
+                'app-store': 'store',
+                'media-player': 'play-circle',
+                'paint': 'paint-brush'
+            };
+            return icons[appId] || 'window-maximize';
         }
 
         function initWindowControls(window) {
@@ -1494,6 +1845,14 @@ Sie können hier Notizen erstellen und speichern.</textarea>
             
             // Activate corresponding sidebar item
             event.target.classList.add('active');
+        }
+
+        function checkForUpdates() {
+            alert('Es werden nach Updates gesucht...\nPartexDesktopOS ist auf dem neuesten Stand!');
+        }
+
+        function installApp(appName) {
+            alert(`${appName} wird installiert...\nInstallation abgeschlossen!`);
         }
 
         // Close start menu when clicking outside
