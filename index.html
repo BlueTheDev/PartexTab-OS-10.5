@@ -438,6 +438,8 @@
             overflow: hidden;
             z-index: 10;
             border: 1px solid rgba(255,255,255,0.1);
+            resize: both;
+            overflow: auto;
         }
 
         .window-header {
@@ -449,6 +451,7 @@
             backdrop-filter: var(--blur);
             color: white;
             cursor: move;
+            user-select: none;
         }
 
         .window-title {
@@ -492,14 +495,32 @@
             background-color: var(--surface-color);
         }
 
-        /* Settings App */
+        /* Settings App - Größer */
+        .settings-container {
+            display: flex;
+            height: 100%;
+        }
+
+        .settings-sidebar {
+            width: 250px;
+            background-color: var(--surface-light);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            padding: 1.5rem 0;
+        }
+
+        .settings-main {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
         .settings-category {
             margin-bottom: 2.5rem;
         }
 
         .settings-title {
-            font-size: 1.3rem;
-            margin-bottom: 1.2rem;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
             color: var(--text-color);
             padding-bottom: 0.5rem;
             border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -509,16 +530,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 1.2rem 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
 
         .setting-label {
             font-weight: 500;
+            font-size: 1rem;
         }
 
         .setting-description {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             opacity: 0.7;
             margin-top: 0.3rem;
         }
@@ -566,6 +588,22 @@
 
         input:checked + .toggle-slider:before {
             transform: translateX(20px);
+        }
+
+        .sidebar-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-item:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+
+        .sidebar-item.active {
+            background-color: rgba(255,255,255,0.1);
+            border-left-color: var(--primary-color);
         }
 
         /* Calculator App */
@@ -871,6 +909,98 @@
         .search-engine-icon {
             margin-right: 1rem;
             font-size: 1.5rem;
+        }
+
+        /* Music Player */
+        .music-player {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .music-cover {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+            margin: 0 auto 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .music-info {
+            margin-bottom: 2rem;
+        }
+
+        .music-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .music-artist {
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        .music-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .music-progress {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .music-progress-bar {
+            position: absolute;
+            height: 100%;
+            width: 30%;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .music-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Camera App */
+        .camera-view {
+            width: 100%;
+            height: 300px;
+            background: #000;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .camera-controls {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .camera-shutter {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -1385,12 +1515,12 @@
                 { id: 'calculator', name: 'Rechner', icon: 'calculator', dock: true },
                 { id: 'browser', name: 'Browser', icon: 'globe', dock: true },
                 { id: 'camera', name: 'Kamera', icon: 'camera', dock: true },
+                { id: 'music', name: 'Musik', icon: 'music', dock: true },
                 { id: 'photos', name: 'Fotos', icon: 'images', dock: false },
                 { id: 'messages', name: 'Nachrichten', icon: 'comment', dock: false },
                 { id: 'mail', name: 'Mail', icon: 'envelope', dock: false },
                 { id: 'maps', name: 'Karten', icon: 'map', dock: false },
                 { id: 'weather', name: 'Wetter', icon: 'cloud-sun', dock: false },
-                { id: 'music', name: 'Musik', icon: 'music', dock: false },
                 { id: 'calendar', name: 'Kalender', icon: 'calendar', dock: false },
                 { id: 'clock', name: 'Uhr', icon: 'clock', dock: false },
                 { id: 'notes', name: 'Notizen', icon: 'sticky-note', dock: false },
@@ -1442,66 +1572,113 @@
         }
 
         function createAppWindows() {
-            // Settings App
-            createWindow('settings', 'Einstellungen', 800, 600, `
-                <div class="settings-category">
-                    <h3 class="settings-title">Allgemein</h3>
-                    <div class="setting-item">
-                        <div>
-                            <div class="setting-label">Dunkelmodus</div>
-                            <div class="setting-description">Systemweiter Dunkelmodus</div>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
+            // Settings App - Größer mit Sidebar
+            createWindow('settings', 'Einstellungen', 1000, 700, `
+                <div class="settings-container">
+                    <div class="settings-sidebar">
+                        <div class="sidebar-item active" data-section="general">Allgemein</div>
+                        <div class="sidebar-item" data-section="display">Display</div>
+                        <div class="sidebar-item" data-section="sound">Ton & Vibration</div>
+                        <div class="sidebar-item" data-section="notifications">Benachrichtigungen</div>
+                        <div class="sidebar-item" data-section="apps">Apps</div>
+                        <div class="sidebar-item" data-section="storage">Speicher</div>
+                        <div class="sidebar-item" data-section="battery">Akku</div>
+                        <div class="sidebar-item" data-section="security">Sicherheit</div>
+                        <div class="sidebar-item" data-section="system">System</div>
                     </div>
-                    <div class="setting-item">
-                        <div>
-                            <div class="setting-label">Fenstermodus</div>
-                            <div class="setting-description">Apps in Fenstern öffnen</div>
+                    <div class="settings-main">
+                        <div id="settings-general" class="settings-section">
+                            <h3 class="settings-title">Allgemein</h3>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Dunkelmodus</div>
+                                    <div class="setting-description">Systemweiter Dunkelmodus aktivieren</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Fenstermodus</div>
+                                    <div class="setting-description">Apps in Fenstern öffnen</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="window-mode" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Automatische Drehung</div>
+                                    <div class="setting-description">Bildschirm dreht sich automatisch</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
                         </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="window-mode" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="settings-category">
-                    <h3 class="settings-title">Geräteinformationen</h3>
-                    <div class="setting-item">
-                        <div>
-                            <div class="setting-label">Modell</div>
-                            <div class="setting-description">PartexTab Pro 2024</div>
+                        
+                        <div id="settings-display" class="settings-section" style="display: none;">
+                            <h3 class="settings-title">Display</h3>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Helligkeit</div>
+                                    <div class="setting-description">Angepasste Helligkeit</div>
+                                </div>
+                                <input type="range" min="0" max="100" value="70" style="width: 150px;">
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Nachtmodus</div>
+                                    <div class="setting-description">Blaulichtfilter für besseren Schlaf</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="setting-item">
-                        <div>
-                            <div class="setting-label">Betriebssystem</div>
-                            <div class="setting-description">PartexTab OS 10.5</div>
+                        
+                        <div id="settings-system" class="settings-section" style="display: none;">
+                            <h3 class="settings-title">Systeminformationen</h3>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Modell</div>
+                                    <div class="setting-description">PartexTab Pro 2024</div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Betriebssystem</div>
+                                    <div class="setting-description">PartexTab OS 10.5</div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Prozessor</div>
+                                    <div class="setting-description">Partex Octa-Core 2.8GHz</div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Arbeitsspeicher</div>
+                                    <div class="setting-description">8 GB RAM</div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Speicher</div>
+                                    <div class="setting-description">128 GB (45 GB frei)</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="setting-item">
-                        <div>
-                            <div class="setting-label">Speicher</div>
-                            <div class="setting-description">128 GB (45 GB frei)</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="settings-category">
-                    <h3 class="settings-title">Benachrichtigungen</h3>
-                    <div class="setting-item">
-                        <div>
-                            <div class="setting-label">Benachrichtigungen</div>
-                            <div class="setting-description">Systembenachrichtigungen</div>
-                        </div>
-                        <label class="toggle-switch">
-                            <input type="checkbox" checked>
-                            <span class="toggle-slider"></span>
-                        </label>
                     </div>
                 </div>
             `);
+            initSettings();
 
             // Calculator App
             createWindow('calculator', 'Rechner', 320, 480, `
@@ -1555,12 +1732,39 @@
             createWindow('camera', 'Kamera', 600, 500, `
                 <div class="app-content">
                     <div style="text-align: center; padding: 2rem;">
-                        <div style="width: 300px; height: 300px; background: #333; border-radius: 10px; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center;">
+                        <div class="camera-view">
                             <i class="fas fa-camera" style="font-size: 3rem; opacity: 0.5;"></i>
                         </div>
-                        <button class="btn btn-primary" style="width: 80px; height: 80px; border-radius: 50%;">
-                            <i class="fas fa-camera" style="font-size: 1.5rem;"></i>
-                        </button>
+                        <div class="camera-controls">
+                            <button class="btn"><i class="fas fa-sync-alt"></i></button>
+                            <button class="camera-shutter">
+                                <i class="fas fa-circle" style="font-size: 2rem; color: black;"></i>
+                            </button>
+                            <button class="btn"><i class="fas fa-images"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `);
+
+            // Music App
+            createWindow('music', 'Musik', 400, 600, `
+                <div class="music-player">
+                    <div class="music-cover"></div>
+                    <div class="music-info">
+                        <div class="music-title">Partex OS Theme</div>
+                        <div class="music-artist">System Sound</div>
+                    </div>
+                    <div class="music-progress">
+                        <div class="music-progress-bar"></div>
+                    </div>
+                    <div class="music-time">
+                        <span>1:23</span>
+                        <span>3:45</span>
+                    </div>
+                    <div class="music-controls">
+                        <button class="btn"><i class="fas fa-backward"></i></button>
+                        <button class="btn" style="background: var(--primary-color); padding: 1rem;"><i class="fas fa-play"></i></button>
+                        <button class="btn"><i class="fas fa-forward"></i></button>
                     </div>
                 </div>
             `);
@@ -1599,6 +1803,90 @@
             const minimizeBtn = window.querySelector('.window-minimize');
             minimizeBtn.addEventListener('click', function() {
                 window.style.display = 'none';
+            });
+
+            // Make window draggable
+            makeDraggable(window);
+        }
+
+        // Window Dragging Functionality
+        function makeDraggable(element) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            const header = element.querySelector('.window-header');
+            
+            header.onmousedown = dragMouseDown;
+            header.ontouchstart = dragTouchStart;
+            
+            function dragMouseDown(e) {
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+                
+                // Bring to front
+                element.style.zIndex = '1000';
+            }
+            
+            function dragTouchStart(e) {
+                const touch = e.touches[0];
+                pos3 = touch.clientX;
+                pos4 = touch.clientY;
+                document.ontouchend = closeDragElement;
+                document.ontouchmove = elementTouchDrag;
+                
+                // Bring to front
+                element.style.zIndex = '1000';
+            }
+            
+            function elementDrag(e) {
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+            
+            function elementTouchDrag(e) {
+                const touch = e.touches[0];
+                pos1 = pos3 - touch.clientX;
+                pos2 = pos4 - touch.clientY;
+                pos3 = touch.clientX;
+                pos4 = touch.clientY;
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+            
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+                document.ontouchend = null;
+                document.ontouchmove = null;
+            }
+        }
+
+        function initSettings() {
+            // Settings sidebar navigation
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    document.querySelectorAll('.sidebar-item').forEach(i => {
+                        i.classList.remove('active');
+                    });
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // Hide all sections
+                    document.querySelectorAll('.settings-section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show selected section
+                    const sectionId = `settings-${this.getAttribute('data-section')}`;
+                    document.getElementById(sectionId).style.display = 'block';
+                });
             });
         }
 
