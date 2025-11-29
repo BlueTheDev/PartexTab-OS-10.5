@@ -13,8 +13,8 @@
             --warning-color: #FF9500;
             --danger-color: #FF3B30;
             --background-color: #000000;
-            --surface-color: #1C1C1E;
-            --surface-light: #2C2C2E;
+            --surface-color: rgba(28, 28, 30, 0.8);
+            --surface-light: rgba(44, 44, 46, 0.8);
             --text-color: #FFFFFF;
             --text-secondary: #8E8E93;
             --border-radius: 14px;
@@ -22,6 +22,10 @@
             --shadow: 0 10px 30px rgba(0,0,0,0.3);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             --blur: blur(20px);
+            --liquid-glass: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
         }
 
         * {
@@ -137,6 +141,7 @@
             transition: var(--transition);
             min-width: 150px;
             border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: var(--blur);
         }
 
         .setup-option:hover {
@@ -163,16 +168,18 @@
             font-weight: 600;
             transition: var(--transition);
             font-size: 1rem;
+            backdrop-filter: var(--blur);
+            background: var(--liquid-glass);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
         }
 
         .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
+            background: var(--primary-color);
         }
 
         .btn-secondary {
-            background-color: var(--surface-color);
-            color: white;
+            background: var(--surface-color);
         }
 
         .btn:hover {
@@ -248,6 +255,7 @@
             flex-direction: column;
             background: url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80') no-repeat center center;
             background-size: cover;
+            transition: background-image 0.5s ease;
         }
 
         /* Status Bar */
@@ -295,6 +303,7 @@
             z-index: 100;
             padding: 1rem;
             overflow-y: auto;
+            backdrop-filter: var(--blur);
         }
 
         .app-drawer.open {
@@ -351,7 +360,7 @@
             align-items: center;
             justify-content: center;
             padding: 1rem;
-            background-color: rgba(255,255,255,0.1);
+            background: var(--liquid-glass);
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
@@ -360,7 +369,7 @@
         }
 
         .app-icon:hover {
-            background-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.2);
             transform: scale(1.1);
         }
 
@@ -396,7 +405,7 @@
             display: flex;
             justify-content: center;
             padding: 0.8rem;
-            background-color: rgba(255,255,255,0.1);
+            background: var(--liquid-glass);
             border-radius: 25px;
             backdrop-filter: var(--blur);
             border: 1px solid rgba(255,255,255,0.1);
@@ -412,10 +421,12 @@
             border-radius: 14px;
             cursor: pointer;
             transition: var(--transition);
+            background: rgba(255,255,255,0.1);
         }
 
         .dock-app:hover {
             transform: scale(1.15);
+            background: rgba(255,255,255,0.2);
         }
 
         .dock-app i {
@@ -428,7 +439,7 @@
         /* App Windows */
         .app-window {
             position: absolute;
-            background-color: var(--surface-color);
+            background: var(--liquid-glass);
             border-radius: var(--border-radius-large);
             box-shadow: var(--shadow);
             display: none;
@@ -440,6 +451,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             resize: both;
             overflow: auto;
+            backdrop-filter: var(--blur);
         }
 
         .window-header {
@@ -447,7 +459,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 1.5rem;
-            background-color: rgba(30,30,32,0.8);
+            background: rgba(30,30,32,0.8);
             backdrop-filter: var(--blur);
             color: white;
             cursor: move;
@@ -492,10 +504,10 @@
             flex: 1;
             padding: 1.5rem;
             overflow: auto;
-            background-color: var(--surface-color);
+            background: transparent;
         }
 
-        /* Settings App - Größer */
+        /* Settings App - Größer mit Liquid Glass */
         .settings-container {
             display: flex;
             height: 100%;
@@ -503,9 +515,10 @@
 
         .settings-sidebar {
             width: 250px;
-            background-color: var(--surface-light);
+            background: var(--liquid-glass);
             border-right: 1px solid rgba(255,255,255,0.1);
             padding: 1.5rem 0;
+            backdrop-filter: var(--blur);
         }
 
         .settings-main {
@@ -595,6 +608,7 @@
             cursor: pointer;
             transition: var(--transition);
             border-left: 4px solid transparent;
+            margin: 0.2rem 0;
         }
 
         .sidebar-item:hover {
@@ -604,6 +618,33 @@
         .sidebar-item.active {
             background-color: rgba(255,255,255,0.1);
             border-left-color: var(--primary-color);
+        }
+
+        /* Background Selection */
+        .background-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .background-option {
+            aspect-ratio: 4/3;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            background-size: cover;
+            background-position: center;
+            border: 2px solid transparent;
+        }
+
+        .background-option:hover {
+            transform: scale(1.05);
+        }
+
+        .background-option.selected {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
         }
 
         /* Calculator App */
@@ -638,30 +679,30 @@
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
+            background: var(--liquid-glass);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .calc-btn:hover {
             opacity: 0.8;
+            background: rgba(255,255,255,0.2);
         }
 
         .calc-number {
             background-color: rgba(255,255,255,0.1);
-            color: white;
         }
 
         .calc-operator {
             background-color: var(--primary-color);
-            color: white;
         }
 
         .calc-equals {
             background-color: var(--accent-color);
-            color: white;
         }
 
         .calc-clear {
             background-color: var(--danger-color);
-            color: white;
         }
 
         /* Browser App */
@@ -676,19 +717,21 @@
         .browser-url {
             flex: 1;
             padding: 0.8rem;
-            background-color: var(--surface-light);
+            background: var(--liquid-glass);
             border-radius: var(--border-radius);
             margin: 0 1rem;
-            border: none;
+            border: 1px solid rgba(255,255,255,0.1);
             color: white;
         }
 
         .browser-content {
             flex: 1;
             padding: 1rem;
-            background-color: white;
-            color: black;
+            background: var(--liquid-glass);
+            color: white;
             overflow-y: auto;
+            border-radius: var(--border-radius);
+            margin: 1rem;
         }
 
         /* Control Center */
@@ -698,7 +741,7 @@
             left: 0;
             width: 100%;
             height: 70%;
-            background-color: rgba(40,40,42,0.9);
+            background: var(--liquid-glass);
             backdrop-filter: var(--blur);
             border-top-left-radius: 30px;
             border-top-right-radius: 30px;
@@ -707,6 +750,7 @@
             padding: 2rem;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .control-header {
@@ -725,7 +769,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -744,18 +788,19 @@
             align-items: center;
             justify-content: center;
             padding: 1.2rem;
-            background-color: rgba(255,255,255,0.1);
+            background: var(--liquid-glass);
             border-radius: var(--border-radius);
             cursor: pointer;
             transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .control-item.active {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
         }
 
         .control-item:hover {
-            background-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.2);
         }
 
         .control-icon {
@@ -768,59 +813,37 @@
             font-weight: 500;
         }
 
-        /* Notification Center */
-        .notification-center {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 380px;
+        /* Progress Bars */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
             height: 100%;
-            background-color: rgba(40,40,42,0.9);
-            backdrop-filter: var(--blur);
-            transition: right 0.3s ease;
-            z-index: 200;
+            background: var(--primary-color);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        /* Storage Visualization */
+        .storage-visual {
             display: flex;
-            flex-direction: column;
-            padding: 1rem;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
         }
 
-        .notification-header {
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 1rem;
-        }
-
-        .notification-list {
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        .notification-item {
-            padding: 1rem;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .notification-title {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        .notification-message {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-bottom: 0.5rem;
-        }
-
-        .notification-time {
-            font-size: 0.7rem;
-            opacity: 0.6;
-        }
+        .storage-system { background: #FF3B30; }
+        .storage-apps { background: #007AFF; }
+        .storage-photos { background: #34C759; }
+        .storage-media { background: #FF9500; }
+        .storage-free { background: rgba(255,255,255,0.2); }
 
         /* Swipe up indicator */
         .swipe-indicator {
@@ -883,7 +906,7 @@
             padding: 1rem;
             margin: 1rem 0;
             text-align: left;
-            background-color: var(--surface-color);
+            background: var(--liquid-glass);
         }
 
         .search-engine-options {
@@ -897,13 +920,14 @@
             display: flex;
             align-items: center;
             padding: 1rem;
-            background-color: var(--surface-color);
+            background: var(--liquid-glass);
             border-radius: var(--border-radius);
             cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .search-engine-option.selected {
-            background-color: var(--primary-color);
+            background: var(--primary-color);
         }
 
         .search-engine-icon {
@@ -1251,6 +1275,18 @@
     <!-- App Windows werden dynamisch erstellt -->
 
     <script>
+        // Hintergrund-Bilder
+        const backgrounds = [
+            'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
+            'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+            'https://images.unsplash.com/photo-1464822759844-4c9a0c4b1a7f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+            'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+            'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+            'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80'
+        ];
+
+        let currentBackground = 0;
+
         // Boot Sequence
         document.addEventListener('DOMContentLoaded', function() {
             startBootSequence();
@@ -1585,6 +1621,7 @@
                         <div class="sidebar-item" data-section="battery">Akku</div>
                         <div class="sidebar-item" data-section="security">Sicherheit</div>
                         <div class="sidebar-item" data-section="system">System</div>
+                        <div class="sidebar-item" data-section="background">Hintergrund</div>
                     </div>
                     <div class="settings-main">
                         <div id="settings-general" class="settings-section">
@@ -1637,6 +1674,120 @@
                                 </div>
                                 <label class="toggle-switch">
                                     <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="settings-storage" class="settings-section" style="display: none;">
+                            <h3 class="settings-title">Speicher</h3>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Gesamtspeicher</div>
+                                    <div class="setting-description">128 GB</div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Verfügbar</div>
+                                    <div class="setting-description">45 GB frei</div>
+                                </div>
+                            </div>
+                            <div class="storage-visual">
+                                <div class="storage-system" style="width: 15%"></div>
+                                <div class="storage-apps" style="width: 25%"></div>
+                                <div class="storage-photos" style="width: 20%"></div>
+                                <div class="storage-media" style="width: 10%"></div>
+                                <div class="storage-free" style="width: 30%"></div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 0.5rem;">
+                                <span>System: 15%</span>
+                                <span>Apps: 25%</span>
+                                <span>Fotos: 20%</span>
+                                <span>Medien: 10%</span>
+                                <span>Frei: 30%</span>
+                            </div>
+                        </div>
+
+                        <div id="settings-battery" class="settings-section" style="display: none;">
+                            <h3 class="settings-title">Akku</h3>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Akkustand</div>
+                                    <div class="setting-description">78% verbleibend</div>
+                                </div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Energiesparmodus</div>
+                                    <div class="setting-description">Reduziert Leistung bei niedrigem Akku</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Akku-Health</div>
+                                    <div class="setting-description">Maximale Kapazität: 94%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="settings-apps" class="settings-section" style="display: none;">
+                            <h3 class="settings-title">Apps</h3>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Installierte Apps</div>
+                                    <div class="setting-description">24 Apps installiert</div>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">App-Berechtigungen</div>
+                                    <div class="setting-description">Verwalten Sie App-Zugriffe</div>
+                                </div>
+                                <button class="btn">Verwalten</button>
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Automatische Updates</div>
+                                    <div class="setting-description">Apps automatisch aktualisieren</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="settings-background" class="settings-section" style="display: none;">
+                            <h3 class="settings-title">Hintergrund</h3>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Aktueller Hintergrund</div>
+                                    <div class="setting-description">Wählen Sie ein neues Hintergrundbild</div>
+                                </div>
+                            </div>
+                            <div class="background-options">
+                                ${backgrounds.map((bg, index) => `
+                                    <div class="background-option ${index === 0 ? 'selected' : ''}" 
+                                         style="background-image: url('${bg}')"
+                                         data-bg-index="${index}">
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="setting-item">
+                                <div>
+                                    <div class="setting-label">Dynamischer Hintergrund</div>
+                                    <div class="setting-description">Hintergrund wechselt automatisch</div>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="dynamic-bg">
                                     <span class="toggle-slider"></span>
                                 </label>
                             </div>
@@ -1888,6 +2039,44 @@
                     document.getElementById(sectionId).style.display = 'block';
                 });
             });
+
+            // Background selection
+            document.querySelectorAll('.background-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    document.querySelectorAll('.background-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Change background
+                    const bgIndex = parseInt(this.getAttribute('data-bg-index'));
+                    changeBackground(bgIndex);
+                });
+            });
+
+            // Dynamic background toggle
+            document.getElementById('dynamic-bg').addEventListener('change', function() {
+                if (this.checked) {
+                    // Start rotating backgrounds every 30 seconds
+                    setInterval(() => {
+                        currentBackground = (currentBackground + 1) % backgrounds.length;
+                        changeBackground(currentBackground);
+                        
+                        // Update selected background in settings
+                        document.querySelectorAll('.background-option').forEach((opt, index) => {
+                            opt.classList.toggle('selected', index === currentBackground);
+                        });
+                    }, 30000);
+                }
+            });
+        }
+
+        function changeBackground(index) {
+            const osInterface = document.getElementById('os-interface');
+            osInterface.style.backgroundImage = `url('${backgrounds[index]}')`;
+            currentBackground = index;
         }
 
         function openApp(appId) {
