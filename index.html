@@ -318,6 +318,7 @@
         .drawer-close {
             font-size: 1.2rem;
             cursor: pointer;
+            padding: 0.5rem;
         }
 
         .drawer-grid {
@@ -649,6 +650,7 @@
             padding: 1rem;
             background-color: white;
             color: black;
+            overflow-y: auto;
         }
 
         /* Control Center */
@@ -833,6 +835,43 @@
             background-color: white;
             transform: scale(1.2);
         }
+
+        /* Setup Terms */
+        .terms-container {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: left;
+            background-color: var(--surface-color);
+        }
+
+        .search-engine-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .search-engine-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--surface-color);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+        }
+
+        .search-engine-option.selected {
+            background-color: var(--primary-color);
+        }
+
+        .search-engine-icon {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -866,15 +905,122 @@
         </div>
     </div>
 
-    <div id="setup-complete" class="setup-screen">
+    <div id="setup-region" class="setup-screen">
         <div class="setup-content">
-            <h2 class="setup-title">Einrichtung abgeschlossen</h2>
-            <p class="setup-subtitle">Ihr PartexTab OS 10.5 ist bereit</p>
-            <div style="margin: 3rem 0;">
-                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--accent-color);"></i>
+            <h2 class="setup-title">Region auswählen</h2>
+            <p class="setup-subtitle">Wählen Sie Ihre Region</p>
+            <div class="setup-options">
+                <div class="setup-option selected" data-value="de">
+                    <i class="fas fa-globe-europe" style="margin-bottom: 0.5rem;"></i>
+                    <div>Deutschland</div>
+                </div>
+                <div class="setup-option" data-value="at">
+                    <i class="fas fa-globe-europe" style="margin-bottom: 0.5rem;"></i>
+                    <div>Österreich</div>
+                </div>
+                <div class="setup-option" data-value="ch">
+                    <i class="fas fa-globe-europe" style="margin-bottom: 0.5rem;"></i>
+                    <div>Schweiz</div>
+                </div>
             </div>
             <div class="setup-buttons">
-                <button class="btn btn-primary" id="next-complete">Starten</button>
+                <button class="btn btn-secondary" id="back-region">Zurück</button>
+                <button class="btn btn-primary" id="next-region">Weiter</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup-wifi" class="setup-screen">
+        <div class="setup-content">
+            <h2 class="setup-title">WLAN-Verbindung</h2>
+            <p class="setup-subtitle">Wählen Sie ein WLAN-Netzwerk</p>
+            <div class="setup-options">
+                <div class="setup-option selected" data-value="home">
+                    <i class="fas fa-wifi" style="margin-bottom: 0.5rem;"></i>
+                    <div>HomeNet_5G</div>
+                </div>
+                <div class="setup-option" data-value="office">
+                    <i class="fas fa-wifi" style="margin-bottom: 0.5rem;"></i>
+                    <div>OfficeWLAN</div>
+                </div>
+                <div class="setup-option" data-value="public">
+                    <i class="fas fa-wifi" style="margin-bottom: 0.5rem;"></i>
+                    <div>FreePublicWiFi</div>
+                </div>
+            </div>
+            <div class="setup-buttons">
+                <button class="btn btn-secondary" id="back-wifi">Zurück</button>
+                <button class="btn btn-primary" id="next-wifi">Weiter</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup-search" class="setup-screen">
+        <div class="setup-content">
+            <h2 class="setup-title">Suchmaschine</h2>
+            <p class="setup-subtitle">Wählen Sie Ihre Standard-Suchmaschine</p>
+            <div class="search-engine-options">
+                <div class="search-engine-option selected" data-value="partex">
+                    <i class="fas fa-search search-engine-icon"></i>
+                    <div>
+                        <div class="setting-label">Partex Search</div>
+                        <div class="setting-description">Standardsuchmaschine von Partex</div>
+                    </div>
+                </div>
+                <div class="search-engine-option" data-value="google">
+                    <i class="fab fa-google search-engine-icon"></i>
+                    <div>
+                        <div class="setting-label">Google</div>
+                        <div class="setting-description">Google Suche</div>
+                    </div>
+                </div>
+                <div class="search-engine-option" data-value="bing">
+                    <i class="fab fa-microsoft search-engine-icon"></i>
+                    <div>
+                        <div class="setting-label">Bing</div>
+                        <div class="setting-description">Microsoft Bing</div>
+                    </div>
+                </div>
+            </div>
+            <div class="setup-buttons">
+                <button class="btn btn-secondary" id="back-search">Zurück</button>
+                <button class="btn btn-primary" id="next-search">Weiter</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="setup-terms" class="setup-screen">
+        <div class="setup-content">
+            <h2 class="setup-title">Nutzungsbedingungen</h2>
+            <p class="setup-subtitle">Bitte lesen und akzeptieren Sie die Bedingungen</p>
+            <div class="terms-container">
+                <h3>PartexTab OS 10.5 Nutzungsbedingungen</h3>
+                <p><strong>Letzte Aktualisierung: 15. Mai 2024</strong></p>
+                
+                <h4>1. Allgemeine Bestimmungen</h4>
+                <p>Durch die Nutzung von PartexTab OS 10.5 stimmen Sie diesen Nutzungsbedingungen zu. Wenn Sie nicht mit allen Bedingungen einverstanden sind, verwenden Sie das Betriebssystem nicht.</p>
+                
+                <h4>2. Lizenzierung</h4>
+                <p>Partex gewährt Ihnen eine eingeschränkte, nicht exklusive, nicht übertragbare Lizenz zur Nutzung von PartexTab OS 10.5 auf Ihrem Tablet-Gerät.</p>
+                
+                <h4>3. Datenschutz</h4>
+                <p>Ihre Privatsphäre ist uns wichtig. Unsere Datenschutzrichtlinie erklärt, wie wir Ihre Daten sammeln, verwenden und schützen.</p>
+                
+                <h4>4. Haftungsausschluss</h4>
+                <p>PartexTab OS 10.5 wird "wie besehen" bereitgestellt. Partex übernimmt keine Gewährleistung für die Fehlerfreiheit oder Unterbrechungsfreiheit des Betriebssystems.</p>
+                
+                <h4>5. Änderungen der Bedingungen</h4>
+                <p>Partex behält sich das Recht vor, diese Nutzungsbedingungen jederzeit zu ändern. Fortgesetzte Nutzung nach Änderungen gilt als Zustimmung zu den geänderten Bedingungen.</p>
+            </div>
+            <div style="margin: 1rem 0; text-align: left;">
+                <label style="display: flex; align-items: center; cursor: pointer;">
+                    <input type="checkbox" id="agree-terms" style="margin-right: 0.5rem;">
+                    Ich akzeptiere die Nutzungsbedingungen und Datenschutzrichtlinie
+                </label>
+            </div>
+            <div class="setup-buttons">
+                <button class="btn btn-secondary" id="back-terms">Zurück</button>
+                <button class="btn btn-primary" id="next-terms" disabled>Fertigstellen</button>
             </div>
         </div>
     </div>
@@ -1012,7 +1158,14 @@
         }
 
         // Setup System
-        const setupScreens = ['setup-language', 'setup-complete'];
+        const setupScreens = [
+            'setup-language', 
+            'setup-region', 
+            'setup-wifi', 
+            'setup-search', 
+            'setup-terms'
+        ];
+        
         let currentSetupStep = 0;
         
         function showSetupScreen(screenId) {
@@ -1020,13 +1173,43 @@
                 screen.style.display = 'none';
             });
             document.getElementById(screenId).style.display = 'flex';
+            currentSetupStep = setupScreens.indexOf(screenId);
         }
         
+        // Setup Navigation
         document.getElementById('next-language').addEventListener('click', function() {
-            showSetupScreen('setup-complete');
+            showSetupScreen('setup-region');
         });
         
-        document.getElementById('next-complete').addEventListener('click', function() {
+        document.getElementById('back-region').addEventListener('click', function() {
+            showSetupScreen('setup-language');
+        });
+        
+        document.getElementById('next-region').addEventListener('click', function() {
+            showSetupScreen('setup-wifi');
+        });
+        
+        document.getElementById('back-wifi').addEventListener('click', function() {
+            showSetupScreen('setup-region');
+        });
+        
+        document.getElementById('next-wifi').addEventListener('click', function() {
+            showSetupScreen('setup-search');
+        });
+        
+        document.getElementById('back-search').addEventListener('click', function() {
+            showSetupScreen('setup-wifi');
+        });
+        
+        document.getElementById('next-search').addEventListener('click', function() {
+            showSetupScreen('setup-terms');
+        });
+        
+        document.getElementById('back-terms').addEventListener('click', function() {
+            showSetupScreen('setup-search');
+        });
+        
+        document.getElementById('next-terms').addEventListener('click', function() {
             document.querySelectorAll('.setup-screen').forEach(screen => {
                 screen.style.display = 'none';
             });
@@ -1035,10 +1218,25 @@
             setInterval(updateTime, 60000);
         });
 
+        // Terms Agreement Toggle
+        document.getElementById('agree-terms').addEventListener('change', function() {
+            document.getElementById('next-terms').disabled = !this.checked;
+        });
+
         // Setup Option Selection
         document.querySelectorAll('.setup-option').forEach(option => {
             option.addEventListener('click', function() {
                 this.parentElement.querySelectorAll('.setup-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Search Engine Selection
+        document.querySelectorAll('.search-engine-option').forEach(option => {
+            option.addEventListener('click', function() {
+                this.parentElement.querySelectorAll('.search-engine-option').forEach(opt => {
                     opt.classList.remove('selected');
                 });
                 this.classList.add('selected');
@@ -1107,7 +1305,7 @@
         
         // Swipe up from bottom to open control center
         document.addEventListener('touchstart', function(e) {
-            if (e.touches[0].clientY > window.innerHeight - 50 && !controlIsOpen) {
+            if (e.touches[0].clientY > window.innerHeight - 100 && !controlIsOpen) {
                 controlCenter.style.transform = 'translateY(-70%)';
                 controlIsOpen = true;
             }
@@ -1122,6 +1320,14 @@
         document.querySelectorAll('.control-item').forEach(item => {
             item.addEventListener('click', function() {
                 this.classList.toggle('active');
+                
+                // Special actions for specific controls
+                const controlId = this.id;
+                if (controlId === 'control-settings') {
+                    openApp('settings');
+                    controlCenter.style.transform = 'translateY(0)';
+                    controlIsOpen = false;
+                }
             });
         });
 
@@ -1132,20 +1338,25 @@
             updateTime();
             setInterval(updateTime, 60000);
             
-            // App Drawer Swipe
+            // App Drawer
             initAppDrawer();
         }
 
         // App Drawer
         function initAppDrawer() {
             const appDrawer = document.getElementById('app-drawer');
+            
+            // Close drawer when clicking X
+            document.getElementById('drawer-close').addEventListener('click', function() {
+                appDrawer.classList.remove('open');
+            });
+
+            // Swipe from right edge to open drawer
             let drawerStartX = 0;
             let drawerCurrentX = 0;
-            let drawerIsOpen = false;
             
-            // Swipe from right edge to open drawer
             document.addEventListener('touchstart', function(e) {
-                if (e.touches[0].clientX > window.innerWidth - 50 && !drawerIsOpen) {
+                if (e.touches[0].clientX > window.innerWidth - 100) {
                     drawerStartX = e.touches[0].clientX;
                 }
             });
@@ -1155,33 +1366,15 @@
                     drawerCurrentX = e.touches[0].clientX;
                     const diff = drawerStartX - drawerCurrentX;
                     
-                    if (diff > 0) {
-                        appDrawer.style.transform = `translateX(${100 - (diff/5)}%)`;
+                    if (diff > 50) {
+                        appDrawer.classList.add('open');
                     }
                 }
             });
             
             document.addEventListener('touchend', function() {
-                if (drawerStartX > 0) {
-                    const diff = drawerStartX - drawerCurrentX;
-                    
-                    if (diff > 100) {
-                        // Open drawer
-                        appDrawer.classList.add('open');
-                        drawerIsOpen = true;
-                    } else {
-                        // Reset
-                        appDrawer.style.transform = 'translateX(100%)';
-                    }
-                    
-                    drawerStartX = 0;
-                    drawerCurrentX = 0;
-                }
-            });
-            
-            document.getElementById('drawer-close').addEventListener('click', function() {
-                appDrawer.classList.remove('open');
-                drawerIsOpen = false;
+                drawerStartX = 0;
+                drawerCurrentX = 0;
             });
         }
 
@@ -1269,7 +1462,7 @@
                             <div class="setting-description">Apps in Fenstern öffnen</div>
                         </div>
                         <label class="toggle-switch">
-                            <input type="checkbox" id="window-mode">
+                            <input type="checkbox" id="window-mode" checked>
                             <span class="toggle-slider"></span>
                         </label>
                     </div>
@@ -1353,11 +1546,24 @@
                         <h2>Willkommen beim Partex Browser</h2>
                         <p>Dies ist ein simulierter Browser für PartexTab OS 10.5.</p>
                         <p>Sie können hier nach Belieben surfen und Webseiten besuchen.</p>
+                        <p><strong>Standard-Suchmaschine:</strong> <span id="search-engine-display">Partex Search</span></p>
                     </div>
                 </div>
             `);
 
-            // Weitere Apps können hier hinzugefügt werden...
+            // Camera App
+            createWindow('camera', 'Kamera', 600, 500, `
+                <div class="app-content">
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="width: 300px; height: 300px; background: #333; border-radius: 10px; margin: 0 auto 2rem; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-camera" style="font-size: 3rem; opacity: 0.5;"></i>
+                        </div>
+                        <button class="btn btn-primary" style="width: 80px; height: 80px; border-radius: 50%;">
+                            <i class="fas fa-camera" style="font-size: 1.5rem;"></i>
+                        </button>
+                    </div>
+                </div>
+            `);
         }
 
         function createWindow(appId, title, width, height, content) {
@@ -1405,11 +1611,20 @@
                 // Fenstermodus
                 const appWindow = document.getElementById(`app-${appId}`);
                 if (appWindow) {
+                    // Schließe andere Fenster
+                    document.querySelectorAll('.app-window').forEach(win => {
+                        win.style.display = 'none';
+                    });
+                    
                     appWindow.style.display = 'flex';
-                    appWindow.style.zIndex = Date.now(); // Immer oben
+                    appWindow.style.zIndex = '1000';
                     
                     // Schließe App Drawer wenn offen
                     document.getElementById('app-drawer').classList.remove('open');
+                    
+                    // Schließe Control Center wenn offen
+                    controlCenter.style.transform = 'translateY(0)';
+                    controlIsOpen = false;
                 }
             } else {
                 // Vollbildmodus - Hier könnte man zu einer anderen Seite wechseln
